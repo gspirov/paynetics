@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <div class="table-responsive">
+        <h1>Project "{{ project.title }}" Tasks count: ({{ pagination.getTotalItemCount }})</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% if pagination.count > 0 %}
+                {% for task in pagination %}
+                    <tr>
+                        <td>{{ task.name }}</td>
+                        <td>{{ task.status.value }}</td>
+                        <td>{{ task.startDate|date }}</td>
+                        <td>{{ task.endDate|date }}</td>
+                        <td>{{ task.createdAt|date }}</td>
+                        <td>{{ task.updatedAt|date }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="12" class="text-center">
+                        No tasks found.
+                    </td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
